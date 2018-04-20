@@ -512,6 +512,7 @@
     <string name="submit_date">Submit Date</string>
     <string name="error_message">Server Sync Error</string>
     <string name="sync_clients">Clients</string>
+    <string name="sync_all_clients">Sync Clients</string>
     <string name="sync_groups">Groups</string>
     <string name="sync_centers">Centers</string>
     <string name="sync_loanrepayments">LoanRepayments</string>
@@ -739,6 +740,7 @@
     <string name="collections">Collections</string>
     <string name="reports">Reports</string>
     <string name="accounting">Accounting</string>
+    <string name="reference">Reference</string>
 
 
 </resources>

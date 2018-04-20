@@ -205,12 +205,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="@string/payment_type"
+                        android:text="@string/receipt_number"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <EditText
-                        android:id="@+id/et_reference"
-                        android:hint="Reference"
+                        android:id="@+id/et_receipt_number"
+                        android:hint="@string/receipt_number"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />

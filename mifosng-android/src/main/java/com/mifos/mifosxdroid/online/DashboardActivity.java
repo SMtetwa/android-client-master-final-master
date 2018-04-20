@@ -326,6 +326,10 @@ public class DashboardActivity extends MifosBaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.mItem_sync_all_clients:
+                Toast.makeText(getContext(), "Syncing all clients", Toast.LENGTH_SHORT).show();
+                //
+                break;
             case R.id.mItem_create_new_client:
                 setActionBarTitle(R.string.create_client);
                 openCreateClient();
@@ -372,19 +376,20 @@ public class DashboardActivity extends MifosBaseActivity
            Log.d("Data {}", name);
            switch (name){
                case Constants.CLIENTS:
-                   replaceFragment(ClientListFragment.newInstance(), true, R.id.container);
+                   replaceFragment(ClientListFragment.newInstance(), false, R.id.container);
                    break;
                case Constants.GROUPS:
-                   replaceFragment(GroupsListFragment.newInstance(), true, R.id.container);
+                   replaceFragment(GroupsListFragment.newInstance(), false, R.id.container);
                    break;
-               case Constants.LOANS:
-                   replaceFragment(ClientListFragment.newInstance(), true, R.id.container);
+               case Constants.CREATE_CLIENTS:
+                   replaceFragment(CreateNewClientFragment.newInstance(), false, R.id.container);
                    break;
                case Constants.COLLECTIONS:
                    final Intent intent = new Intent();
                    intent.setClass(this, GenerateCollectionSheetActivity.class);
                    intent.putExtra(Constants.COLLECTION_TYPE, Constants.EXTRA_COLLECTION_COLLECTION);
                    startActivity(intent);
+                   this.finish();
                    break;
                case Constants.ACCOUNTING:
                    replaceFragment(ClientListFragment.newInstance(), true, R.id.container);
@@ -409,6 +414,7 @@ public class DashboardActivity extends MifosBaseActivity
     protected void onResume() {
         super.onResume();
         this.receiveData();
+        setToolbarTitle("Dashboard");
     }
 }
 

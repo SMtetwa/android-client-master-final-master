@@ -208,4 +208,5 @@ public class Constants {
     public static final String ACCOUNTING = "accounting";
     public static final String COLLECTIONS = "collections";
     public static final String LOANS = "loans";
+    public static final String CREATE_CLIENTS = "create_clients";
 }

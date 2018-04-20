@@ -93,6 +93,9 @@ public class LoanRepaymentFragment extends MifosBaseFragment
     @BindView(R.id.bt_paynow)
     Button bt_paynow;
 
+    @BindView(R.id.et_receipt_number)
+    EditText et_reference;
+
     @Inject
     LoanRepaymentPresenter mLoanRepaymentPresenter;
 
@@ -337,6 +340,7 @@ public class LoanRepaymentFragment extends MifosBaseFragment
                     {"Amount", et_amount.getText().toString()},
                     {"Addition Payment", et_additionalPayment.getText().toString()},
                     {"Fees", et_fees.getText().toString()},
+                    {"Receipt#", et_reference.getText().toString()},
                     {"Total", String.valueOf(calculateTotal())}
             };
             Log.d(LOG_TAG, FlipTable.of(headers, data));
@@ -353,7 +357,9 @@ public class LoanRepaymentFragment extends MifosBaseFragment
                     .append("\n")
                     .append(data[5][0] + " : " + data[5][1])
                     .append("\n")
-                    .append(data[6][0] + " : " + data[6][1]).toString();
+                    .append(data[6][0] + " : " + data[6][1])
+                    .append("\n")
+                    .append(data[7][0] + " : " + data[7][1]).toString();
 
             new MaterialDialog.Builder().init(getActivity())
                     .setTitle(R.string.review_payment)
@@ -402,6 +408,7 @@ public class LoanRepaymentFragment extends MifosBaseFragment
         request.setTransactionAmount(String.valueOf(calculateTotal()));
         request.setDateFormat("dd MM yyyy");
         request.setTransactionDate(dateString);
+        request.setReference(et_reference.getText().toString());
         String builtRequest = new Gson().toJson(request);
         Log.i("LOG_TAG", builtRequest);
 
