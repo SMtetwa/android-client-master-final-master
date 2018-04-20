@@ -14,7 +14,7 @@
             android:layout_height="wrap_content">
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_clients"
-                android:drawableLeft="@drawable/ic_person_add_white_18pt_3x"
+                android:drawableLeft="@drawable/ic_person_white_18pt_3x"
                 android:layout_height="fill_parent"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
@@ -37,6 +37,7 @@
             android:layout_height="wrap_content">
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_create_client"
+                android:drawableLeft="@drawable/ic_person_add_white_18pt_3x"
                 android:layout_height="fill_parent"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
@@ -62,14 +63,6 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="@string/accounting"
-                />
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_reports"
-                android:drawableLeft="@drawable/ic_attach_money_white_18pt_3x"
-                android:layout_height="fill_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/reports"
                 />
         </LinearLayout>
     </LinearLayout>

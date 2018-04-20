@@ -195,13 +195,13 @@ public class DashboardActivity extends MifosBaseActivity
                 replaceFragment(new DashFragment(), false, R.id.container);
                 break;
             case R.id.item_clients:
-                replaceFragment(ClientListFragment.newInstance(), false, R.id.container);
+                replaceFragment(ClientListFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_groups:
-                replaceFragment(GroupsListFragment.newInstance(), false, R.id.container);
+                replaceFragment(GroupsListFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_centers:
-                replaceFragment(CenterListFragment.newInstance(), false, R.id.container);
+                replaceFragment(CenterListFragment.newInstance(), true, R.id.container);
                 break;
             case R.id.item_path_tracker:
                 intent.setClass(getApplicationContext(), PathTrackingActivity.class);
@@ -392,7 +392,8 @@ public class DashboardActivity extends MifosBaseActivity
                    this.finish();
                    break;
                case Constants.ACCOUNTING:
-                   replaceFragment(ClientListFragment.newInstance(), true, R.id.container);
+                   Toast.makeText(getContext(), "Feature not yet implemented!", Toast.LENGTH_SHORT).show();
+                   //replaceFragment(ClientListFragment.newInstance(), true, R.id.container);
                    break;
                case Constants.REPORTS:
                    replaceFragment(ClientListFragment.newInstance(), true, R.id.container);

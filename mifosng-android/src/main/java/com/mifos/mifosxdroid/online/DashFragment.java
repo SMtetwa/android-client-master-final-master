@@ -35,7 +35,7 @@ public class DashFragment extends Fragment{
         return rootView;
     }
 
-   @OnClick({R.id.btn_clients, R.id.btn_groups, R.id.btn_create_client, R.id.btn_collections, R.id.btn_accounting, R.id.btn_reports})
+   @OnClick({R.id.btn_clients, R.id.btn_groups, R.id.btn_create_client, R.id.btn_collections, R.id.btn_accounting})
     public void click(View v){
        Intent intent = new Intent(getActivity(), DashboardActivity.class);
         switch (v.getId()){
@@ -53,9 +53,6 @@ public class DashFragment extends Fragment{
                 break;
             case R.id.btn_accounting:
                 intent.putExtra("VALUE", Constants.ACCOUNTING);
-                break;
-            case R.id.btn_reports:
-                intent.putExtra("VALUE", Constants.REPORTS);
                 break;
         }
        startActivity(intent);
