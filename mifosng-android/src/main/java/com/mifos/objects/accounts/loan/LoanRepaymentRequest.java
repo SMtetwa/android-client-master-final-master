@@ -65,8 +65,6 @@ public class LoanRepaymentRequest extends MifosBaseModel implements Parcelable {
     @Column
     String bankNumber;
 
-    @Column
-    String reference;
 
     public String getErrorMessage() {
         return errorMessage;
@@ -180,14 +178,6 @@ public class LoanRepaymentRequest extends MifosBaseModel implements Parcelable {
         this.bankNumber = bankNumber;
     }
 
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -206,7 +196,6 @@ public class LoanRepaymentRequest extends MifosBaseModel implements Parcelable {
         dest.writeString(this.routingCode);
         dest.writeString(this.receiptNumber);
         dest.writeString(this.bankNumber);
-        dest.writeString(this.reference);
     }
 
     public LoanRepaymentRequest() {
@@ -224,7 +213,6 @@ public class LoanRepaymentRequest extends MifosBaseModel implements Parcelable {
         this.routingCode = in.readString();
         this.receiptNumber = in.readString();
         this.bankNumber = in.readString();
-        this.reference = in.readString();
     }
 
     public static final Parcelable.Creator<LoanRepaymentRequest> CREATOR =

@@ -13,4 +13,15 @@
             android:title="@string/sync"
             appcompat:showAsAction="always"
             />
+
+    <item
+        android:id="@+id/action_select_all"
+        android:title="@string/select_all"
+        appcompat:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/action_deselect_all"
+        android:title="@string/deselect_all"
+        appcompat:showAsAction="ifRoom"
+        />
 </menu>

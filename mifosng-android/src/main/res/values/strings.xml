@@ -741,6 +741,8 @@
     <string name="reports">Reports</string>
     <string name="accounting">Accounting</string>
     <string name="reference">Reference</string>
+    <string name="select_all">Select All</string>
+    <string name="deselect_all">Deselect All</string>
 
 
 </resources>

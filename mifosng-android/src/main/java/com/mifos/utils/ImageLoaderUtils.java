@@ -25,6 +25,8 @@ public class ImageLoaderUtils {
     }
 
     public static GlideUrl buildGlideUrl(int clientId) {
+        String tenant = String.valueOf(PrefManager.getTenant());
+        String token = String.valueOf(PrefManager.getToken());
         return new GlideUrl(buildImageUrl(clientId), new LazyHeaders.Builder()
                 .addHeader(MifosInterceptor.HEADER_TENANT, PrefManager.getTenant())
                 .addHeader(MifosInterceptor.HEADER_AUTH, PrefManager.getToken())

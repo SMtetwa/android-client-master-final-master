@@ -13,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -418,6 +419,17 @@ public class ClientListFragment extends MifosBaseFragment
                     syncClientsDialogFragment.show(fragmentTransaction,
                             getResources().getString(R.string.sync_clients));
                     mode.finish();
+                    return true;
+
+                case R.id.action_select_all:
+
+                    for (int i = 0; i < mClientNameListAdapter.getItemCount(); i++){
+                        List<Integer> s = mClientNameListAdapter.getSelectedItems();
+                        Log.d("selected clients {}", String.valueOf(s));
+                        Log.d("count {}", String.valueOf(mClientNameListAdapter.getItemCount()));
+                        onItemLongPress(rv_clients, i);
+                    }
+
                     return true;
 
                 default:

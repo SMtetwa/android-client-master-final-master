@@ -46,6 +46,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".AddJournalActivity"
+            android:label="Add Journal"
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/mifos_account"

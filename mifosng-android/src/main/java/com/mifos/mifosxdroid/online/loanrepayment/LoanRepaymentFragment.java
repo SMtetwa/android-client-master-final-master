@@ -94,7 +94,7 @@ public class LoanRepaymentFragment extends MifosBaseFragment
     Button bt_paynow;
 
     @BindView(R.id.et_receipt_number)
-    EditText et_reference;
+    EditText et_receipt_number;
 
     @Inject
     LoanRepaymentPresenter mLoanRepaymentPresenter;
@@ -331,6 +331,12 @@ public class LoanRepaymentFragment extends MifosBaseFragment
      */
     @OnClick(R.id.bt_paynow)
     public void onPayNowButtonClicked() {
+       String receiptNumber = et_receipt_number.getText().toString();
+       if (receiptNumber.matches("")){
+           Toaster.show(rootView, "Receipt # cannot be empty");
+           return;
+       }
+
         try {
             String[] headers = {"Field", "Value"};
             final String[][] data = {
@@ -340,7 +346,7 @@ public class LoanRepaymentFragment extends MifosBaseFragment
                     {"Amount", et_amount.getText().toString()},
                     {"Addition Payment", et_additionalPayment.getText().toString()},
                     {"Fees", et_fees.getText().toString()},
-                    {"Receipt#", et_reference.getText().toString()},
+                    {"Receipt#", et_receipt_number.getText().toString()},
                     {"Total", String.valueOf(calculateTotal())}
             };
             Log.d(LOG_TAG, FlipTable.of(headers, data));
@@ -408,7 +414,7 @@ public class LoanRepaymentFragment extends MifosBaseFragment
         request.setTransactionAmount(String.valueOf(calculateTotal()));
         request.setDateFormat("dd MM yyyy");
         request.setTransactionDate(dateString);
-        request.setReference(et_reference.getText().toString());
+        request.setReceiptNumber(et_receipt_number.getText().toString());
         String builtRequest = new Gson().toJson(request);
         Log.i("LOG_TAG", builtRequest);
 

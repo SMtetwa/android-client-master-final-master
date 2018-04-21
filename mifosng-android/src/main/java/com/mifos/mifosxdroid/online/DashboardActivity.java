@@ -400,9 +400,6 @@ public class DashboardActivity extends MifosBaseActivity
                    break;
            }
 
-
-
-
        }
     }
 
