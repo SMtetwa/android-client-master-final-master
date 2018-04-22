@@ -9,10 +9,9 @@ import com.mifos.mifosxdroid.online.groupslist.GroupsListFragment;
  * author   samsoftx
  * email    gwokudasam@gmail.com
  * date     4/21/18
- * <p>
+ *
  * Copyright (c) Samsoftx - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
+ * Written by Samuel Gwokuda
  */
 
 public class AddJournalActivity extends MifosBaseActivity {

@@ -427,11 +427,17 @@ public class ClientListFragment extends MifosBaseFragment
 
                 case R.id.action_select_all:
                     toggleSyncAll = true;
+                    List<Integer> s = mClientNameListAdapter.getSelectedItems();
+                    Log.d("selected clients {}", String.valueOf(s));
                     for (int i = 0; i < mClientNameListAdapter.getItemCount(); i++){
-                        List<Integer> s = mClientNameListAdapter.getSelectedItems();
-                        Log.d("selected clients {}", String.valueOf(s));
                         Log.d("count {}", String.valueOf(mClientNameListAdapter.getItemCount()));
                         onItemLongPress(rv_clients, i);
+                    }
+
+                    if (!s.isEmpty()){
+                        for (int j : s){
+                            onItemLongPress(rv_clients, j);
+                        }
                     }
 
                     return true;

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.mifos.mifosxdroid.AddJournalActivity;
 import com.mifos.mifosxdroid.R;
 import com.mifos.utils.Constants;
 
@@ -50,8 +51,10 @@ public class DashFragment extends Fragment{
                 break;
             case R.id.btn_collections:
                 intent.putExtra("VALUE", Constants.COLLECTIONS);
+
                 break;
             case R.id.btn_accounting:
+                intent = new Intent(getActivity(), AddJournalActivity.class);
                 intent.putExtra("VALUE", Constants.ACCOUNTING);
                 break;
         }

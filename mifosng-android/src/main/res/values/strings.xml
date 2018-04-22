@@ -743,6 +743,10 @@
     <string name="reference">Reference</string>
     <string name="select_all">Select All</string>
     <string name="deselect_all">Deselect All</string>
+    <string name="currency">Currency</string>
+    <string name="debit">Debit</string>
+    <string name="credit">Credit</string>
+    <string name="comments">Comments</string>
 
 
 </resources>

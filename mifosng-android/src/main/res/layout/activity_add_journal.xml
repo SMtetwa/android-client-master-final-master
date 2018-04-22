@@ -1,10 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+<!--
+  ~ This project is licensed under the open source MPL V2.
+  ~ See https://github.com/openMF/android-client/blob/master/LICENSE.md
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/LinearLayout.Base"
+    android:id="@+id/ll_add_journal">
+
+    <LinearLayout
+        style="@style/LinearLayout.Width">
+        <TextView
+            android:id="@+id/tv_office"
+            android:text="@string/office"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:layout_weight="1"
+            android:id="@+id/sp_office_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:spinnerMode="dropdown"
+            android:background="@color/light_grey"/>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/LinearLayout.Width">
+        <TextView
+            android:id="@+id/tv__currency"
+            android:text="@string/currency"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:layout_weight="1"
+            android:id="@+id/sp_currency"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:spinnerMode="dropdown"
+            android:background="@color/light_grey"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/LinearLayout.Width">
+        <Spinner
+            android:layout_weight="1"
+            android:id="@+id/sp_select_debit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:spinnerMode="dropdown"
+            android:background="@color/light_grey"/>
+        <EditText
+            android:layout_weight="1"
+            android:hint="@string/debit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/LinearLayout.Width">
+        <Spinner
+            android:layout_weight="1"
+            android:id="@+id/sp_select_credit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:spinnerMode="dropdown"
+            android:background="@color/light_grey"/>
+        <EditText
+            android:layout_weight="1"
+            android:hint="@string/credit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/LinearLayout.Width">
+        <EditText
+            android:layout_weight="1"
+            android:hint="@string/reference"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LinearLayout.Width">
+        <DatePicker
+            android:id="@+id/dp_transaction_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </DatePicker>
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/et_comments"
+        android:hint="@string/comments"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="add some journalsN"/>
+        android:lines="4"
+        android:maxLines="10"
+        android:scrollbars="vertical"/>
+    <Button
+        android:id="@+id/btn_add_journal"
+        style="@style/Button.Base"
+        android:layout_marginTop="10dp"
+        android:text="@string/submit"
+        />
 </LinearLayout>
