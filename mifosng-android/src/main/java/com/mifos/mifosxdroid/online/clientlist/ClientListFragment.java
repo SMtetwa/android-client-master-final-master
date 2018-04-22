@@ -101,6 +101,7 @@ public class ClientListFragment extends MifosBaseFragment
     private Boolean isParentFragment = false;
     private LinearLayoutManager mLayoutManager;
     private Integer clickedPosition = -1;
+    private Boolean toggleSyncAll = false;
 
     @Override
     public void onItemClick(View childView, int position) {
@@ -419,10 +420,13 @@ public class ClientListFragment extends MifosBaseFragment
                     syncClientsDialogFragment.show(fragmentTransaction,
                             getResources().getString(R.string.sync_clients));
                     mode.finish();
+                    if (toggleSyncAll){
+                        newInstance();
+                    }
                     return true;
 
                 case R.id.action_select_all:
-
+                    toggleSyncAll = true;
                     for (int i = 0; i < mClientNameListAdapter.getItemCount(); i++){
                         List<Integer> s = mClientNameListAdapter.getSelectedItems();
                         Log.d("selected clients {}", String.valueOf(s));
@@ -435,6 +439,7 @@ public class ClientListFragment extends MifosBaseFragment
                 default:
                     return false;
             }
+
         }
 
         @Override
