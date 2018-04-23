@@ -44,7 +44,7 @@
             android:id ="@+id/collection_sheet"
             android:checked="false"
             android:icon="@drawable/ic_assignment_black_24dp"
-            android:title="@string/collection_sheet"/>
+            android:title="@string/accounting"/>
                 
         <item
             android:id="@+id/item_path_tracker"

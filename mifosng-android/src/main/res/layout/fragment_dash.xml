@@ -53,12 +53,13 @@
                 />
         </LinearLayout>
         <LinearLayout
-            android:weightSum="2"
+            android:weightSum="1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_accounting"
+                android:drawableLeft="@drawable/ic_local_atm_white_18pt_3x"
                 android:layout_height="fill_parent"
                 android:layout_width="match_parent"
                 android:layout_weight="1"

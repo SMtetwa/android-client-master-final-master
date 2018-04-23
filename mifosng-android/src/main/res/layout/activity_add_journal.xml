@@ -9,6 +9,8 @@
     style="@style/LinearLayout.Base"
     android:id="@+id/ll_add_journal">
 
+    <include layout="@layout/toolbar"/>
+
     <LinearLayout
         style="@style/LinearLayout.Width">
         <TextView
@@ -30,7 +32,7 @@
     <LinearLayout
         style="@style/LinearLayout.Width">
         <TextView
-            android:id="@+id/tv__currency"
+            android:id="@+id/tv_currency"
             android:text="@string/currency"
             android:layout_weight="1"
             android:layout_width="match_parent"
@@ -58,9 +60,11 @@
             android:spinnerMode="dropdown"
             android:background="@color/light_grey"/>
         <EditText
+            android:id="@+id/et_debit"
+            android:inputType="numberDecimal"
             android:layout_weight="1"
             android:hint="@string/debit"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
@@ -74,6 +78,8 @@
             android:spinnerMode="dropdown"
             android:background="@color/light_grey"/>
         <EditText
+            android:id="@+id/et_credit"
+            android:inputType="numberDecimal"
             android:layout_weight="1"
             android:hint="@string/credit"
             android:layout_width="match_parent"
@@ -82,20 +88,29 @@
     <LinearLayout
         style="@style/LinearLayout.Width">
         <EditText
+            android:id="@+id/et_reference"
             android:layout_weight="1"
             android:hint="@string/reference"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/LinearLayout.Width">
-        <DatePicker
-            android:id="@+id/dp_transaction_date"
-            android:layout_width="wrap_content"
+        <LinearLayout
+         android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        </DatePicker>
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_select_date"
+                style="@style/Button.Base"
+                android:layout_marginTop="10dp"
+                android:text="@string/tap_to_select_date"
+                />
+            <TextView
+                android:id="@+id/tv_set_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
 
 
     <EditText

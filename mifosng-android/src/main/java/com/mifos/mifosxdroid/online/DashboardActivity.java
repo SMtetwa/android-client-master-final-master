@@ -326,10 +326,6 @@ public class DashboardActivity extends MifosBaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.mItem_sync_all_clients:
-                Toast.makeText(getContext(), "Syncing all clients", Toast.LENGTH_SHORT).show();
-                //
-                break;
             case R.id.mItem_create_new_client:
                 setActionBarTitle(R.string.create_client);
                 openCreateClient();
@@ -387,7 +383,7 @@ public class DashboardActivity extends MifosBaseActivity
                case Constants.COLLECTIONS:
                    final Intent intent = new Intent();
                    intent.setClass(this, GenerateCollectionSheetActivity.class);
-                   intent.putExtra(Constants.COLLECTION_TYPE, Constants.EXTRA_COLLECTION_COLLECTION);
+                   intent.putExtra(Constants.COLLECTION_TYPE, Constants.EXTRA_COLLECTION_INDIVIDUAL);
                    startActivity(intent);
                    this.finish();
                    break;

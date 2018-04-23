@@ -51,7 +51,6 @@ public class DashFragment extends Fragment{
                 break;
             case R.id.btn_collections:
                 intent.putExtra("VALUE", Constants.COLLECTIONS);
-
                 break;
             case R.id.btn_accounting:
                 intent = new Intent(getActivity(), AddJournalActivity.class);

@@ -439,13 +439,17 @@ public class ClientListFragment extends MifosBaseFragment
                             onItemLongPress(rv_clients, j);
                         }
                     }
+                    return true;
 
+                case R.id.action_deselect_all:
+                    toggleSyncAll = false;
+                    mClientNameListAdapter.clearSelection();
+                    actionMode.setTitle("");
                     return true;
 
                 default:
                     return false;
             }
-
         }
 
         @Override
