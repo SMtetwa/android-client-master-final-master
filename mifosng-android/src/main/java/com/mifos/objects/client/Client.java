@@ -52,9 +52,9 @@ public class Client extends MifosBaseModel implements Parcelable {
     @ForeignKey(saveForeignKeyModel = true)
     ClientDate clientDate;
 
-    List<Integer> activationDate = new ArrayList<Integer>();
+    List<Integer> activationDate = new ArrayList<>();
 
-    List<Integer> dobDate = new ArrayList<Integer>();
+    List<Integer> dobDate = new ArrayList<>();
 
     @Column
     String firstname;

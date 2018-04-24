@@ -20,6 +20,7 @@ import com.mifos.api.MifosInterceptor;
 import com.mifos.api.local.databasehelper.DatabaseHelperOffices;
 import com.mifos.mifosxdroid.core.MifosBaseActivity;
 import com.mifos.mifosxdroid.core.util.Toaster;
+import com.mifos.objects.journal.Journal;
 import com.mifos.objects.organisation.Office;
 import com.mifos.utils.PrefManager;
 
@@ -72,7 +73,7 @@ public class AddJournalActivity extends MifosBaseActivity
 
     private BaseApiManager baseApiManager = new BaseApiManager();
 
-    OkHttpClient client;
+    static OkHttpClient client;
     MediaType JSON;
 
     static String dateSet = "";
@@ -99,7 +100,7 @@ public class AddJournalActivity extends MifosBaseActivity
         spOffices.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "Selected item " + officeNameList.get(position));
+                Log.d(TAG, "Selected item " + position);
             }
 
             @Override
@@ -109,12 +110,21 @@ public class AddJournalActivity extends MifosBaseActivity
         });
     }
 
-    public class GetTask extends AsyncTask {
+    public static class GetTask extends AsyncTask {
 
         private Exception exception;
         @Override
         protected String doInBackground(Object[] objects) {
-
+            Journal journal = new Journal();
+            journal.setOfficeId(1);
+            journal.setLocale("en");
+            journal.setTransactionDate("");
+            journal.setReferenceNumber("");
+            journal.setCurrencyCode("");
+            journal.setComments("");
+            journal.setAccountingRule(2);
+            journal.setAmount(Double.valueOf("0.00"));
+            //
             try {
                 String getResponse = getOffices("https://demo2.mifosx.net/fineract-provider/api/v1/offices?paged=true&offset=0&limit=100");
                 Log.d(TAG, "");
@@ -129,17 +139,20 @@ public class AddJournalActivity extends MifosBaseActivity
             System.out.println(getResponse);
         }
 
-        public String getOffices(String url) throws IOException {
+        public String getOffices(final String url) throws IOException {
 
             Request request = new Request.Builder()
                     .addHeader(MifosInterceptor.HEADER_TENANT, PrefManager.getTenant())
                     .addHeader(MifosInterceptor.HEADER_AUTH, PrefManager.getToken())
                     .url(url)
                     .build();
+
             Response response = client.newCall(request).execute();
             return response.body().string();
         }
     }
+
+
 
     @OnClick(R.id.btn_select_date)
     public void selectDate(){
@@ -155,9 +168,14 @@ public class AddJournalActivity extends MifosBaseActivity
 
     @OnClick(R.id.btn_add_journal)
     public void submit(){
-        if (validate()){
+        Journal journal
+
+        GetTask task = new GetTask();
+        task.execute();
+
+       /* if (validate()){
             Toaster.show(this.getCurrentFocus(), "Adding Journal");
-        }
+        }*/
     }
 
     @Override
