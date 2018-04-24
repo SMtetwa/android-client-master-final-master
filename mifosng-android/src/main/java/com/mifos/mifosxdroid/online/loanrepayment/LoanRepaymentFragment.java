@@ -417,7 +417,6 @@ public class LoanRepaymentFragment extends MifosBaseFragment
         request.setReceiptNumber(et_receipt_number.getText().toString());
         String builtRequest = new Gson().toJson(request);
         Log.i("LOG_TAG", builtRequest);
-
         mLoanRepaymentPresenter.submitPayment(Integer.parseInt(loanId), request);
     }
 

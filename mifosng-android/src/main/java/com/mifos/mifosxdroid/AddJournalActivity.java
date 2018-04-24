@@ -2,24 +2,44 @@ package com.mifos.mifosxdroid;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.mifos.api.BaseApiManager;
+import com.mifos.api.MifosInterceptor;
+import com.mifos.api.local.databasehelper.DatabaseHelperOffices;
 import com.mifos.mifosxdroid.core.MifosBaseActivity;
 import com.mifos.mifosxdroid.core.util.Toaster;
+import com.mifos.objects.organisation.Office;
+import com.mifos.utils.PrefManager;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * author   samsoftx
@@ -40,10 +60,20 @@ public class AddJournalActivity extends MifosBaseActivity
     @BindView(R.id.et_comments) EditText etComments;
     @BindView(R.id.btn_add_journal) Button btnAddJournal;
     @BindView(R.id.sp_currency) Spinner spCurrency;
-    @BindView(R.id.sp_office_list) Spinner spOffice;
+    @BindView(R.id.sp_office_list) Spinner spOffices;
 
     @BindView(R.id.sp_select_debit) Spinner spDebit;
     @BindView(R.id.sp_select_credit) Spinner spCredit;
+    @Inject
+    DatabaseHelperOffices databaseHelperOffices = new DatabaseHelperOffices();
+
+    private ArrayAdapter<String> officeAdapter;
+    private ArrayList<String> officeNameList;
+
+    private BaseApiManager baseApiManager = new BaseApiManager();
+
+    OkHttpClient client;
+    MediaType JSON;
 
     static String dateSet = "";
     static Calendar calendar = Calendar.getInstance();
@@ -58,6 +88,57 @@ public class AddJournalActivity extends MifosBaseActivity
         showBackButton();
         setToolbarTitle("Add Journal");
         ButterKnife.bind(this);
+
+        final String[] offices={"Report 1","Report 2","Report 3","Report 4","Report 5"};
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, offices);
+       /* ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, str);*/
+        spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        spOffices.setAdapter(spinnerArrayAdapter);
+
+        spOffices.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "Selected item " + officeNameList.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public class GetTask extends AsyncTask {
+
+        private Exception exception;
+        @Override
+        protected String doInBackground(Object[] objects) {
+
+            try {
+                String getResponse = getOffices("https://demo2.mifosx.net/fineract-provider/api/v1/offices?paged=true&offset=0&limit=100");
+                Log.d(TAG, "");
+                return getResponse;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String getResponse) {
+            System.out.println(getResponse);
+        }
+
+        public String getOffices(String url) throws IOException {
+
+            Request request = new Request.Builder()
+                    .addHeader(MifosInterceptor.HEADER_TENANT, PrefManager.getTenant())
+                    .addHeader(MifosInterceptor.HEADER_AUTH, PrefManager.getToken())
+                    .url(url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        }
     }
 
     @OnClick(R.id.btn_select_date)
@@ -108,7 +189,7 @@ public class AddJournalActivity extends MifosBaseActivity
     }
 
     private boolean validateOfficeSpinner(){
-        if (spOffice.getSelectedItemPosition() == -1){
+        if (spOffices.getSelectedItemPosition() == -1){
             Toaster.show(tv_setDate, "Please Select an Office");
             return false;
         }

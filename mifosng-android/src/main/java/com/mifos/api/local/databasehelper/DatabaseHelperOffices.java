@@ -21,12 +21,10 @@ import rx.Subscriber;
 @Singleton
 public class DatabaseHelperOffices {
 
-
     @Inject
     public DatabaseHelperOffices() {
 
     }
-
 
     public Observable<Void> saveAllOffices(final List<Office> offices) {
         AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
