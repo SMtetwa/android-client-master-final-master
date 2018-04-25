@@ -1,5 +1,7 @@
 package com.mifos.mifosxdroid.online.loanrepayment;
 
+import android.util.Log;
+
 import com.mifos.api.datamanager.DataManagerLoan;
 import com.mifos.mifosxdroid.R;
 import com.mifos.mifosxdroid.base.BasePresenter;
@@ -87,6 +89,7 @@ public class LoanRepaymentPresenter extends BasePresenter<LoanRepaymentMvpView> 
 
                     @Override
                     public void onNext(LoanRepaymentResponse loanRepaymentResponse) {
+                        Log.d("Loan Repayment res {}", loanRepaymentResponse.toString());
                         getMvpView().showProgressbar(false);
                         getMvpView().showPaymentSubmittedSuccessfully(loanRepaymentResponse);
                     }

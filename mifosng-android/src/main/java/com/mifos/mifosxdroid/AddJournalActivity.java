@@ -90,7 +90,7 @@ public class AddJournalActivity extends MifosBaseActivity
         setToolbarTitle("Add Journal");
         ButterKnife.bind(this);
 
-        final String[] offices={"Report 1","Report 2","Report 3","Report 4","Report 5"};
+        final String[] offices={"Head Office","Rusape","Marondera"};
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, offices);
        /* ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, str);*/
@@ -153,7 +153,6 @@ public class AddJournalActivity extends MifosBaseActivity
     }
 
 
-
     @OnClick(R.id.btn_select_date)
     public void selectDate(){
         DatePickerDialog dialog = new DatePickerDialog(this,
@@ -168,8 +167,6 @@ public class AddJournalActivity extends MifosBaseActivity
 
     @OnClick(R.id.btn_add_journal)
     public void submit(){
-        Journal journal
-
         GetTask task = new GetTask();
         task.execute();
 
