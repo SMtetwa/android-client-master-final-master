@@ -65,6 +65,8 @@ public class LoanAccountFragment extends ProgressableDialogFragment
 
     public final String LOG_TAG = getClass().getSimpleName();
 
+    private boolean initLoan = true;
+
     View rootView;
 
     @BindView(R.id.sp_lproduct)
@@ -244,7 +246,6 @@ public class LoanAccountFragment extends ProgressableDialogFragment
                 (disbursementDate).replace("-", " ");
 
         inflateSpinners();
-
         return rootView;
     }
 
@@ -358,6 +359,7 @@ public class LoanAccountFragment extends ProgressableDialogFragment
         spInterestCalculationPeriod.setAdapter(mInterestCalculationPeriodTypeOptionsAdapter);
         spInterestCalculationPeriod.setOnItemSelectedListener(this);
 
+
         //Inflate TransactionProcessingStrategyOptions Spinner
         mTransactionProcessingStrategyOptionsAdapter = new ArrayAdapter<>(getActivity(),
                 layout.simple_spinner_item, mListTransactionProcessingStrategyOptions);
@@ -373,6 +375,7 @@ public class LoanAccountFragment extends ProgressableDialogFragment
                 layout.simple_spinner_dropdown_item);
         spPaymentPeriods.setAdapter(mTermFrequencyTypeOptionsAdapter);
         spPaymentPeriods.setOnItemSelectedListener(this);
+        //spPaymentPeriods.setSelection(1);
 
         //Inflate LoanTerm Frequency Type adapter
         mLoanTermFrequencyTypeAdapter = new ArrayAdapter<>(getActivity(),
@@ -402,11 +405,9 @@ public class LoanAccountFragment extends ProgressableDialogFragment
         mInterestTypeOptionsAdapter.setDropDownViewResource(layout.simple_spinner_dropdown_item);
         spInterestType.setAdapter(mInterestTypeOptionsAdapter);
         spInterestType.setOnItemSelectedListener(this);
-
     }
 
     private void inflateRepaidMonthSpinners() {
-
         mRepaymentFrequencyNthDayTypeOptionsAdapter = new ArrayAdapter<>(
                 getActivity(), layout.simple_spinner_item,
                 mListRepaymentFrequencyNthDayTypeOptions);
@@ -651,6 +652,10 @@ public class LoanAccountFragment extends ProgressableDialogFragment
             case R.id.sp_loan_term_periods:
                 loanTermFrequency = mLoanTemplate.getTermFrequencyTypeOptions().get(position)
                         .getId();
+                if (initLoan){
+                    loanTermFrequency = 1;
+                }
+                initLoan = false;
                 spPaymentPeriods.setSelection(loanTermFrequency);
                 if (loanTermFrequency == 2) {
                     // Show and inflate Nth day and week spinners

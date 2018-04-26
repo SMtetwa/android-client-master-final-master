@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -72,6 +73,7 @@ public class LoanAccountPresenter extends BasePresenter<LoanAccountMvpView> {
     public void loadLoanAccountTemplate(int clientId, int productId) {
         checkViewAttached();
         getMvpView().showProgressbar(true);
+
         mSubscriptions.add(mDataManagerLoan.getLoansAccountTemplate(clientId, productId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
