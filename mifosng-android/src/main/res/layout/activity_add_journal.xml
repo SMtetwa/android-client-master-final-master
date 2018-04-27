@@ -12,47 +12,44 @@
     <include layout="@layout/toolbar"/>
 
     <LinearLayout
-        style="@style/LinearLayout.Width">
+        android:orientation="vertical"
+        style="@style/LinearLayout.Height">
         <TextView
+            android:paddingLeft="10dp"
             android:id="@+id/tv_office"
             android:text="@string/office"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
         <Spinner
-            android:layout_weight="1"
             android:id="@+id/sp_office_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
             android:spinnerMode="dropdown"
             android:background="@color/light_grey"/>
-    </LinearLayout>
-    <LinearLayout
-        style="@style/LinearLayout.Width">
+
         <TextView
+            android:paddingLeft="10dp"
             android:id="@+id/tv_currency"
             android:text="@string/currency"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
         <Spinner
-            android:layout_weight="1"
             android:id="@+id/sp_currency"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
             android:spinnerMode="dropdown"
             android:background="@color/light_grey"/>
-    </LinearLayout>
 
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/tv_debit"
+            android:text="@string/debit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
-    <LinearLayout
-        style="@style/LinearLayout.Width">
         <Spinner
-            android:layout_weight="1"
             android:id="@+id/sp_select_debit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -60,15 +57,18 @@
             android:spinnerMode="dropdown"
             android:background="@color/light_grey"/>
         <EditText
+            android:paddingLeft="10dp"
             android:id="@+id/et_debit"
             android:inputType="numberDecimal"
-            android:layout_weight="1"
             android:hint="@string/debit"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/LinearLayout.Width">
+
+        <TextView
+            android:id="@+id/tv_credit"
+            android:text="@string/credit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
         <Spinner
             android:layout_weight="1"
             android:id="@+id/sp_select_credit"
@@ -80,7 +80,6 @@
         <EditText
             android:id="@+id/et_credit"
             android:inputType="numberDecimal"
-            android:layout_weight="1"
             android:hint="@string/credit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

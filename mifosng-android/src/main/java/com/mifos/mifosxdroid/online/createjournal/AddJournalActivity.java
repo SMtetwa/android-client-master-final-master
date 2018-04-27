@@ -1,9 +1,10 @@
-package com.mifos.mifosxdroid;
+package com.mifos.mifosxdroid.online.createjournal;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,12 +17,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.mifos.api.BaseApiManager;
+import com.mifos.api.DataManager;
 import com.mifos.api.MifosInterceptor;
 import com.mifos.api.local.databasehelper.DatabaseHelperOffices;
-import com.mifos.mifosxdroid.core.MifosBaseActivity;
+import com.mifos.mifosxdroid.R;
 import com.mifos.mifosxdroid.core.util.Toaster;
+import com.mifos.mifosxdroid.online.clientdetails.ClientDetailsPresenter;
+import com.mifos.mifosxdroid.online.savingsaccount.SavingsAccountPresenter;
 import com.mifos.objects.journal.Journal;
-import com.mifos.objects.organisation.Office;
+import com.mifos.objects.journal.TransactionAccount;
 import com.mifos.utils.PrefManager;
 
 import java.io.IOException;
@@ -39,8 +43,11 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * author   samsoftx
@@ -51,8 +58,8 @@ import rx.android.schedulers.AndroidSchedulers;
  * Written by Samuel Gwokuda
  */
 
-public class AddJournalActivity extends MifosBaseActivity
-        implements DialogInterface.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class AddJournalActivity extends AppCompatActivity
+        implements DialogInterface.OnClickListener, DatePickerDialog.OnDateSetListener, AddJournalMvpView {
 
     @BindView(R.id.et_debit) EditText etDebit;
     @BindView(R.id.et_credit) EditText etCredit;
@@ -65,16 +72,18 @@ public class AddJournalActivity extends MifosBaseActivity
 
     @BindView(R.id.sp_select_debit) Spinner spDebit;
     @BindView(R.id.sp_select_credit) Spinner spCredit;
-    @Inject
-    DatabaseHelperOffices databaseHelperOffices = new DatabaseHelperOffices();
 
+/*    Subscription mSubscription = new CompositeSubscription();
+    BaseApiManager mDataManager = new BaseApiManager();*/
+
+    @Inject
+    SavingsAccountPresenter mSavingsAccountPresenter;
+
+    DatabaseHelperOffices databaseHelperOffices = new DatabaseHelperOffices();
     private ArrayAdapter<String> officeAdapter;
     private ArrayList<String> officeNameList;
 
-    private BaseApiManager baseApiManager = new BaseApiManager();
-
     static OkHttpClient client;
-    MediaType JSON;
 
     static String dateSet = "";
     static Calendar calendar = Calendar.getInstance();
@@ -86,16 +95,17 @@ public class AddJournalActivity extends MifosBaseActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_journal);
-        showBackButton();
-        setToolbarTitle("Add Journal");
         ButterKnife.bind(this);
 
         final String[] offices={"Head Office","Rusape","Marondera"};
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, offices);
-       /* ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, str);*/
         spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
         spOffices.setAdapter(spinnerArrayAdapter);
+
+        spDebit.setAdapter(spinnerArrayAdapter);
+        spCredit.setAdapter(spinnerArrayAdapter);
+        spCurrency.setAdapter(spinnerArrayAdapter);
+
 
         spOffices.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -108,6 +118,11 @@ public class AddJournalActivity extends MifosBaseActivity
 
             }
         });
+    }
+
+    @Override
+    public void showProgressbar(boolean b) {
+
     }
 
     public static class GetTask extends AsyncTask {
@@ -124,7 +139,42 @@ public class AddJournalActivity extends MifosBaseActivity
             journal.setComments("");
             journal.setAccountingRule(2);
             journal.setAmount(Double.valueOf("0.00"));
-            //
+            List<TransactionAccount> creditsList = new ArrayList<>();
+            TransactionAccount t1Credit = new TransactionAccount();
+            t1Credit.setGlAccountId(1);
+            t1Credit.setAmount(new Double("2.00"));
+
+            TransactionAccount t2Credit = new TransactionAccount();
+            t2Credit.setGlAccountId(2);
+            t2Credit.setAmount(new Double("2.00"));
+
+            creditsList.add(t1Credit);
+            creditsList.add(t2Credit);
+            journal.setCredits(creditsList);
+
+            List<TransactionAccount> debitsList = new ArrayList<>();
+            journal.setDebits(debitsList);
+            TransactionAccount t1Debit = new TransactionAccount();
+            t1Debit.setGlAccountId(3);
+            t1Debit.setAmount(new Double("2.00"));
+
+            TransactionAccount t2Debit = new TransactionAccount();
+            t2Debit.setGlAccountId(4);
+            t2Debit.setAmount(new Double("2.00"));
+
+            creditsList.add(t1Credit);
+            creditsList.add(t2Credit);
+
+            debitsList.add(t1Debit);
+            debitsList.add(t2Debit);
+
+            journal.setCredits(creditsList);
+            journal.setDebits(debitsList);
+
+
+            journal.setPaymentTypeId(2);
+            Log.d("JSON {}", new Gson().toJson(journal));
+
             try {
                 String getResponse = getOffices("https://demo2.mifosx.net/fineract-provider/api/v1/offices?paged=true&offset=0&limit=100");
                 Log.d(TAG, "");
@@ -167,8 +217,8 @@ public class AddJournalActivity extends MifosBaseActivity
 
     @OnClick(R.id.btn_add_journal)
     public void submit(){
-        GetTask task = new GetTask();
-        task.execute();
+        Journal journal = new Journal();
+        mSavingsAccountPresenter.createJournal(journal);
 
        /* if (validate()){
             Toaster.show(this.getCurrentFocus(), "Adding Journal");

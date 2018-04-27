@@ -1,11 +1,15 @@
 package com.mifos.mifosxdroid.online.savingsaccount;
 
+import android.util.Log;
+
+import com.mifos.api.GenericResponse;
 import com.mifos.api.datamanager.DataManagerSavings;
 import com.mifos.mifosxdroid.R;
 import com.mifos.mifosxdroid.base.BasePresenter;
 import com.mifos.objects.accounts.savings.FieldOfficerOptions;
 import com.mifos.objects.client.Savings;
 import com.mifos.objects.common.InterestType;
+import com.mifos.objects.journal.Journal;
 import com.mifos.objects.organisation.ProductSavings;
 import com.mifos.objects.templates.savings.SavingProductsTemplate;
 import com.mifos.objects.zipmodels.SavingProductsAndTemplate;
@@ -170,6 +174,32 @@ public class SavingsAccountPresenter extends BasePresenter<SavingsAccountMvpView
                 }));
     }
 
+
+    public void createJournal(Journal journalPayload) {
+        checkViewAttached();
+        getMvpView().showProgressbar(true);
+        mSubscriptions.add(mDataManagerSavings.mBaseApiManager.getAccountingApi().postJournal(journalPayload)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<GenericResponse>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("ADD JOURNAL {}", "Completed");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(GenericResponse genericResponse) {
+
+                    }
+                }));
+    }
+
+    // mDataManagerSavings.mBaseApiManager.getAccountingApi().postJournal()
+
     public List<String> filterSpinnerOptions(List<InterestType> interestTypes) {
         final ArrayList<String> interestNameList = new ArrayList<>();
         Observable.from(interestTypes)
@@ -191,6 +221,7 @@ public class SavingsAccountPresenter extends BasePresenter<SavingsAccountMvpView
                         productsNames.add(product.getName());
                     }
                 });
+
         return productsNames;
     }
 
@@ -203,6 +234,7 @@ public class SavingsAccountPresenter extends BasePresenter<SavingsAccountMvpView
                         fieldOfficerNames.add(fieldOfficerOptions.getDisplayName());
                     }
                 });
+
         return fieldOfficerNames;
     }
 }

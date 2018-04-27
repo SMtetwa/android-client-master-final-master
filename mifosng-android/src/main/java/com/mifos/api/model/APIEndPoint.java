@@ -25,6 +25,7 @@ public class APIEndPoint {
     public static final String CREATELOANSPRODUCTS = "loanproducts";
     public static final String DATATABLES = "datatables";
     public static final String GROUPS = "groups";
+    public static final String ACCOUNTING_JOURNAL = "journalentries";
     public static final String DOCUMENTS = "documents";
     public static final String IDENTIFIERS = "identifiers";
     public static final String OFFICES = "offices";

@@ -7,6 +7,7 @@ package com.mifos.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mifos.api.services.AccountingService;
 import com.mifos.api.services.AuthService;
 import com.mifos.api.services.CenterService;
 import com.mifos.api.services.ChargeService;
@@ -58,6 +59,7 @@ public class BaseApiManager {
     private static RunReportsService runreportsService;
     private static NoteService noteService;
     private static CollectionSheetService collectionSheetService;
+    private static AccountingService accountingApi;
 
     public BaseApiManager() {
         createService();
@@ -81,6 +83,7 @@ public class BaseApiManager {
         runreportsService = createApi(RunReportsService.class);
         noteService = createApi(NoteService.class);
         collectionSheetService = createApi(CollectionSheetService.class);
+        accountingApi = createApi(AccountingService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -169,4 +172,6 @@ public class BaseApiManager {
     public CollectionSheetService getCollectionSheetApi() {
         return collectionSheetService;
     }
+
+    public AccountingService getAccountingApi(){ return accountingApi;}
 }

@@ -15,12 +15,31 @@ import com.google.gson.annotations.SerializedName;
  * Proprietary and confidential
  */
 
-class TransactionAccount implements Parcelable {
+public class TransactionAccount implements Parcelable {
 
     private Integer glAccountId;
 
     @SerializedName("amount")
     private Double amount;
+
+    public Integer getGlAccountId() {
+        return glAccountId;
+    }
+
+    public void setGlAccountId(Integer glAccountId) {
+        this.glAccountId = glAccountId;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public TransactionAccount() {
+    }
 
     protected TransactionAccount(Parcel in) {
         if (in.readByte() == 0) {

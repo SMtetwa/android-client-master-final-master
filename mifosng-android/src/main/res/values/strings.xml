@@ -747,6 +747,7 @@
     <string name="debit">Debit</string>
     <string name="credit">Credit</string>
     <string name="comments">Comments</string>
+    <string name="first_repayment">First Repayment</string>
 
 
 </resources>

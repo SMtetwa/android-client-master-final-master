@@ -89,6 +89,22 @@
                 android:paddingTop="10dp"
                 android:spinnerMode="dropdown" />
 
+            <TextView
+                android:id="@+id/tv_first_repayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/first_repayment"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/sp_first_repayment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey"
+                android:paddingTop="10dp"
+                android:spinnerMode="dropdown" />
+
             <LinearLayout style="@style/LinearLayout.Width">
 
                 <TextView

@@ -15,6 +15,7 @@ import com.mifos.objects.group.Center;
 import com.mifos.objects.group.CenterWithAssociations;
 import com.mifos.objects.group.Group;
 import com.mifos.objects.group.GroupWithAssociations;
+import com.mifos.objects.journal.Journal;
 import com.mifos.objects.organisation.LoanProducts;
 import com.mifos.objects.organisation.Office;
 import com.mifos.objects.organisation.Staff;
@@ -180,4 +181,13 @@ public class DataManager {
     public Observable<Page<Charges>> getListOfCharges(int clientId) {
         return mBaseApiManager.getLoanApi().getListOfCharges(clientId);
     }
+
+    /**
+     * Accounting API
+     */
+
+    public Observable<String> postJournal(Journal journal){
+        return mBaseApiManager.getAccountingApi().postJournal(journal);
+    }
+
 }

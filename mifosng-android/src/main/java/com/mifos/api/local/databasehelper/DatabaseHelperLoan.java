@@ -146,7 +146,6 @@ public class DatabaseHelperLoan {
         return Observable.defer(new Func0<Observable<List<LoanRepaymentRequest>>>() {
             @Override
             public Observable<List<LoanRepaymentRequest>> call() {
-
                 List<LoanRepaymentRequest> loanRepaymentRequests = SQLite.select()
                         .from(LoanRepaymentRequest.class)
                         .orderBy(LoanRepaymentRequest_Table.timeStamp, true)
