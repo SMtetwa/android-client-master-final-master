@@ -235,11 +235,11 @@ public class AddJournalActivity extends AppCompatActivity
         List<TransactionAccount> creditsList = new ArrayList<>();
         TransactionAccount t1Credit = new TransactionAccount();
         t1Credit.setGlAccountId(1);
-        t1Credit.setAmount(new Double("2.00"));
+        t1Credit.setAmount(Double.valueOf("2.00"));
 
         TransactionAccount t2Credit = new TransactionAccount();
         t2Credit.setGlAccountId(2);
-        t2Credit.setAmount(new Double("2.00"));
+        t2Credit.setAmount(Double.valueOf("2.00"));
 
         creditsList.add(t1Credit);
         creditsList.add(t2Credit);
@@ -269,6 +269,7 @@ public class AddJournalActivity extends AppCompatActivity
         Log.d("JSON {}", new Gson().toJson(journal));
 
         BaseApiManager api = new BaseApiManager();
+
         rx.Observable<GenericResponse> responseObservable = api.getAccountingApi().postJournal(journal);
         Subscription disposable = responseObservable
                 .subscribeOn(Schedulers.io()) // optional if you do not wish to override the default behavior

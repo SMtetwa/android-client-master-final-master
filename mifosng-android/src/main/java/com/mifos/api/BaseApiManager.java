@@ -173,5 +173,7 @@ public class BaseApiManager {
         return collectionSheetService;
     }
 
-    public AccountingService getAccountingApi(){ return accountingApi;}
+    public AccountingService getAccountingApi(){
+        return accountingApi;
+    }
 }
