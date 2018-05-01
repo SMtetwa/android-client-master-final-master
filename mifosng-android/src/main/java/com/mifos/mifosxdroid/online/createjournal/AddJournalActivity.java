@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,16 +15,19 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mifos.api.BaseApiManager;
 import com.mifos.api.DataManager;
+import com.mifos.api.GenericResponse;
 import com.mifos.api.MifosInterceptor;
 import com.mifos.api.local.databasehelper.DatabaseHelperOffices;
 import com.mifos.mifosxdroid.R;
 import com.mifos.mifosxdroid.core.util.Toaster;
 import com.mifos.mifosxdroid.online.clientdetails.ClientDetailsPresenter;
 import com.mifos.mifosxdroid.online.savingsaccount.SavingsAccountPresenter;
+import com.mifos.objects.accounts.loan.LoanWithAssociations;
 import com.mifos.objects.journal.Journal;
 import com.mifos.objects.journal.TransactionAccount;
 import com.mifos.utils.PrefManager;
@@ -33,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Observable;
 
 import javax.inject.Inject;
 
@@ -43,6 +48,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import retrofit2.Call;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -218,10 +224,75 @@ public class AddJournalActivity extends AppCompatActivity
     @OnClick(R.id.btn_add_journal)
     public void submit(){
         Journal journal = new Journal();
-        mSavingsAccountPresenter.createJournal(journal);
+        journal.setOfficeId(1);
+        journal.setLocale("en");
+        journal.setTransactionDate("");
+        journal.setReferenceNumber("");
+        journal.setCurrencyCode("");
+        journal.setComments("test from app");
+        journal.setAccountingRule(2);
+        journal.setAmount(Double.valueOf("0.00"));
+        List<TransactionAccount> creditsList = new ArrayList<>();
+        TransactionAccount t1Credit = new TransactionAccount();
+        t1Credit.setGlAccountId(1);
+        t1Credit.setAmount(new Double("2.00"));
 
-       /* if (validate()){
-            Toaster.show(this.getCurrentFocus(), "Adding Journal");
+        TransactionAccount t2Credit = new TransactionAccount();
+        t2Credit.setGlAccountId(2);
+        t2Credit.setAmount(new Double("2.00"));
+
+        creditsList.add(t1Credit);
+        creditsList.add(t2Credit);
+        journal.setCredits(creditsList);
+
+        List<TransactionAccount> debitsList = new ArrayList<>();
+        journal.setDebits(debitsList);
+        TransactionAccount t1Debit = new TransactionAccount();
+        t1Debit.setGlAccountId(3);
+        t1Debit.setAmount(new Double("2.00"));
+
+        TransactionAccount t2Debit = new TransactionAccount();
+        t2Debit.setGlAccountId(4);
+        t2Debit.setAmount(new Double("2.00"));
+
+        creditsList.add(t1Credit);
+        creditsList.add(t2Credit);
+
+        debitsList.add(t1Debit);
+        debitsList.add(t2Debit);
+
+        journal.setCredits(creditsList);
+        journal.setDebits(debitsList);
+
+
+        journal.setPaymentTypeId(2);
+        Log.d("JSON {}", new Gson().toJson(journal));
+
+        BaseApiManager api = new BaseApiManager();
+        rx.Observable<GenericResponse> responseObservable = api.getAccountingApi().postJournal(journal);
+        Subscription disposable = responseObservable
+                .subscribeOn(Schedulers.io()) // optional if you do not wish to override the default behavior
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GenericResponse>() {
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("done");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toaster.show(btnAddJournal, "error " + e.getMessage());
+                        //System.out.println("error " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(GenericResponse genericResponse) {
+                        System.out.println("ext");
+                    }
+                });
+        //disposable.unsubscribe();
+        /* if (validate()){
+             Toaster.show(this.getCurrentFocus(), "Adding Journal");
         }*/
     }
 

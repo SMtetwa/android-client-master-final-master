@@ -186,7 +186,7 @@ public class DataManager {
      * Accounting API
      */
 
-    public Observable<String> postJournal(Journal journal){
+    public Observable<GenericResponse> postJournal(Journal journal){
         return mBaseApiManager.getAccountingApi().postJournal(journal);
     }
 
